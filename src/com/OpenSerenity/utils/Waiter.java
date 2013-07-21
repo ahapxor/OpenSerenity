@@ -15,13 +15,13 @@ public class Waiter {
     long timeout = 0L;
     long retryTimeout = 1000L;
 
-    public void waitFor(WaitCondition waitCondition) {
+    public void waitFor(WaitCondition waitCondition) throws Exception {
         try {
             long start = new Date().getTime();
             do {
                 try {
                     if (waitCondition.invoke()) {
-                        break;
+                        return;
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -32,6 +32,7 @@ public class Waiter {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        throw new Exception("timeout!");
     }
 
     private boolean timeoutReached(long start) {

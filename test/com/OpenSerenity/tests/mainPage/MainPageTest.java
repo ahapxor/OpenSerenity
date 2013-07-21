@@ -7,8 +7,21 @@ import org.junit.Test;
 
 public class MainPageTest extends TestBase<MainPage> {
 
-    @Test
-    public void testJoiButtonIsVisible() {
-        getPage().getJoinButton().should(Be.visible);
+    @Override
+    protected String getTargetPageUrl() {
+        return "";
     }
+
+    @Override
+    protected Class<MainPage> getPageClass() {
+        return MainPage.class;
+    }
+
+    @Test
+    public void testJoinButtonIsVisible() throws Exception {
+        getPage()
+                .getJoinButton()
+                .should(Be.invisible);
+    }
+
 }

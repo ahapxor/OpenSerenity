@@ -3,5 +3,5 @@ package com.OpenSerenity.dsl;
 import com.OpenSerenity.elements.BaseElement;
 
 public interface Assertion {
-    boolean invoke(BaseElement element);
+    boolean invoke(BaseElement element) throws Exception;
 }

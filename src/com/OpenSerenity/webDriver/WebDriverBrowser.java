@@ -31,7 +31,7 @@ public class WebDriverBrowser implements Browser {
     public <TElement extends BaseElement> TElement findElement(Class<TElement> clz,
                                                                final String locator,
                                                                final Func<Browser> selectFrame)
-            throws IllegalAccessException, InstantiationException {
+            throws Exception {
         Waiter.Default().waitFor(new WaitCondition() {
             @Override
             public boolean invoke() {
@@ -41,7 +41,7 @@ public class WebDriverBrowser implements Browser {
 
         NativeElement nativeElement = new WdNativeElement(new Func<WebElement>() {
             @Override
-            public WebElement invoke() {
+            public WebElement invoke() throws Exception {
                 selectFrame.invoke();
                 return findWdNativeElement(locator);
             }
@@ -53,8 +53,7 @@ public class WebDriverBrowser implements Browser {
         return element;
     }
 
-    private WebElement findWdNativeElement(final String locator)
-    {
+    private WebElement findWdNativeElement(final String locator) throws Exception {
         Waiter.Default().waitFor(new WaitCondition() {
             @Override
             public boolean invoke() {
@@ -108,9 +107,9 @@ public class WebDriverBrowser implements Browser {
     @Override
     public void selectFrame(String locator) {
         if(StringUtils.isNotBlank(locator)) {
-            driver.switchTo().defaultContent();
-        } else {
             driver.switchTo().frame(locator);
+        } else {
+            driver.switchTo().defaultContent();
         }
     }
 
@@ -191,6 +190,6 @@ public class WebDriverBrowser implements Browser {
 
     @Override
     public void acceptAnyAlert() {
-        throw new UnsupportedOperationException(); //To change body of implemented methods use File | Settings | File Templates.
+        //throw new UnsupportedOperationException(); //To change body of implemented methods use File | Settings | File Templates.
     }
 }
