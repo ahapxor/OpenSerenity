@@ -1,4 +1,4 @@
 package com.OpenSerenity.elements;
 
-public class Button extends BaseElement {
+public class Button extends BaseElement<Button> {
 }

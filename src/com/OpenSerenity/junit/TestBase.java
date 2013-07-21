@@ -28,4 +28,5 @@ public class TestBase<TPage extends BasePage> {
     protected TPage getPage() {
         return page;
     }
+
 }

@@ -8,7 +8,10 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="junit-4.11-javadoc" level="project" />
+    <orderEntry type="library" name="junit" level="project" />
+    <orderEntry type="library" name="webDriver" level="project" />
+    <orderEntry type="library" name="commons-codec-1.6" level="project" />
+    <orderEntry type="library" name="wd-dep" level="project" />
   </component>
 </module>
 
