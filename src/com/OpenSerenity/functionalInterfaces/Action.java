@@ -1,5 +1,5 @@
 package com.OpenSerenity.functionalInterfaces;
 
-public interface Action<TResult> {
-    public TResult invoke();
+public interface Action<TValue> {
+    public void invoke(TValue value);
 }

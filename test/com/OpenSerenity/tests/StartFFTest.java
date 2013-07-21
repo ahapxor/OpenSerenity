@@ -9,6 +9,7 @@ public class StartFFTest {
     public void testStart() throws Exception {
         Browser browser = new WebDriverBrowser();
         browser.start();
+        browser.open("");
         Thread.sleep(10000);
         browser.stop();
 

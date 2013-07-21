@@ -5,19 +5,17 @@ import com.OpenSerenity.functionalInterfaces.WaitCondition;
 import java.util.Date;
 
 public class Waiter {
-    public Waiter Default(WaitCondition waitCondition) {
-        return new Waiter(waitCondition);
+    public static Waiter Default() {
+        return new Waiter();
     }
 
-    private Waiter(WaitCondition waitCondition) {
-        this.waitCondition = waitCondition;
+    private Waiter() {
     }
 
     long timeout = 0L;
     long retryTimeout = 1000L;
-    WaitCondition waitCondition;
 
-    public void waitFor() {
+    public void waitFor(WaitCondition waitCondition) {
         try {
             long start = new Date().getTime();
             do {

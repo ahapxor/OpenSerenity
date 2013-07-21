@@ -1,4 +1,7 @@
 package com.OpenSerenity.dsl;
 
-public class Assertion {
+import com.OpenSerenity.elements.BaseElement;
+
+public interface Assertion {
+    boolean invoke(BaseElement element);
 }

@@ -1,12 +1,12 @@
 package com.OpenSerenity.core;
 
 import com.OpenSerenity.elements.BaseElement;
-import com.OpenSerenity.functionalInterfaces.Action;
+import com.OpenSerenity.functionalInterfaces.Func;
 
 import java.util.Set;
 
 public interface Browser {
-    <TElement extends BaseElement> TElement findElement(String locator, Action<Browser> selectFrame);
+    <TElement extends BaseElement> TElement findElement(Class<TElement> clz, String locator, Func<Browser> selectFrame) throws IllegalAccessException, InstantiationException;
 
     public void start();
     public void stop();
