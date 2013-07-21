@@ -18,6 +18,19 @@ public abstract class TestBase<TPage extends BasePage> {
 
     @AfterClass
     public static void tearDownClass() throws Exception {
+        if (TestContext.browser == null) return;
+        try
+        {
+            TestContext.browser.stop();
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        finally
+        {
+            TestContext.browser = null;
+        }
     }
 
     @Before
@@ -27,6 +40,17 @@ public abstract class TestBase<TPage extends BasePage> {
 
     @After
     public void tearDown() {
+        if (TestContext.browser == null)
+        {
+            return;
+        }
+        TestContext.browser.acceptAnyAlert();
+        //make screen-shot if test failed
+
+        if (page != null)
+        {
+            page.selectWindow();
+        }
     }
 
     protected void openTargetPage() throws Exception {

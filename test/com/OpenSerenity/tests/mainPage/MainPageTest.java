@@ -18,10 +18,13 @@ public class MainPageTest extends TestBase<MainPage> {
     }
 
     @Test
-    public void testJoinButtonIsVisible() throws Exception {
-        getPage()
-                .getJoinButton()
-                .should(Be.invisible);
+    public void thisTestShouldPass() throws Exception {
+        getPage().getJoinButton().should(Be.visible);
+    }
+
+    @Test
+    public void thisTestShouldFail() throws Exception {
+        getPage().getJoinButton().should(Be.invisible);
     }
 
 }
