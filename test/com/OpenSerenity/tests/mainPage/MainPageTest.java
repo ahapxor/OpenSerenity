@@ -5,7 +5,7 @@ import com.OpenSerenity.junit.TestBase;
 import com.OpenSerenity.pages.MainPage;
 import org.junit.Test;
 
-public class mainPageTest extends TestBase<MainPage> {
+public class MainPageTest extends TestBase<MainPage> {
 
     @Test
     public void testJoiButtonIsVisible() {
