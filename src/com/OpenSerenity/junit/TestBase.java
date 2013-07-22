@@ -10,12 +10,6 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 
 public abstract class TestBase<TPage extends BasePage> {
-    @BeforeClass
-    public static void setUpClass() throws Exception {
-        TestContext.browser = new WebDriverBrowser();
-        TestContext.browser.start();
-    }
-
     @AfterClass
     public static void tearDownClass() throws Exception {
         if (TestContext.browser == null) return;
@@ -33,8 +27,23 @@ public abstract class TestBase<TPage extends BasePage> {
         }
     }
 
+    private boolean firstTime = true;
+
     @Before
-    public void setUp() throws Exception {
+    public final void setUpMethod() throws Exception {
+        if(firstTime) {
+            setUpClass();
+            firstTime = false;
+        }
+        setUp();
+    }
+
+    protected void setUpClass() throws Exception {
+        TestContext.browser = new WebDriverBrowser();
+        TestContext.browser.start();
+    }
+
+    protected void setUp() throws Exception {
         openTargetPage();
     }
 

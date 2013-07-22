@@ -6,6 +6,8 @@ import com.OpenSerenity.utils.Waiter;
 
 public class BaseElement<TElement extends BaseElement> {
 
+    public void init() throws Exception {}
+
     NativeElement nativeElement;
     public void setNativeElement(NativeElement nativeElement) {
         this.nativeElement = nativeElement;
@@ -29,26 +31,38 @@ public class BaseElement<TElement extends BaseElement> {
             result = false;
         }
 
-        if (!result)
-        {
+        if (!result) {
             throw new Exception("Condition failed");
         }
         return (TElement) this;
     }
 
+    public TElement waitFor(final Assertion condition) throws Exception {
+        return should(condition);
+    }
+
     public <T extends BaseElement> T getChild(Class<T> clz, String locator)
-            throws IllegalAccessException, InstantiationException {
-        if (locator == null)
-        {
+            throws Exception {
+        if (locator == null) {
             throw new IllegalArgumentException("locator must be not null");
         }
-        T result = clz.newInstance();
-        result.setNativeElement(nativeElement.findChild(locator));
-        result.setLocator(locator);
-        return result;
+        T element = clz.newInstance();
+        element.setNativeElement(nativeElement.findChild(locator));
+        element.setLocator(locator);
+        element.init();
+        return element;
     }
 
     public boolean isVisible() throws Exception {
-        return nativeElement.isExists() && nativeElement.isDisplayed();
+        return nativeElement.isDisplayed();
+    }
+
+    public boolean isInVisible() throws Exception {
+        return !nativeElement.isExists() || !nativeElement.isDisplayed();
+    }
+
+    public TElement click() throws Exception {
+        nativeElement.click();
+        return (TElement) this;
     }
 }

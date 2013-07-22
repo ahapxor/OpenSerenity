@@ -14,7 +14,7 @@ public class Be {
     public static Assertion invisible = new Assertion() {
         @Override
         public boolean invoke(BaseElement element) throws Exception {
-            return !element.isVisible();
+            return element.isInVisible();
         }
     };
 }

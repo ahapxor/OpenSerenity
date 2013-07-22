@@ -50,6 +50,7 @@ public class WebDriverBrowser implements Browser {
         TElement element = clz.newInstance();
         element.setNativeElement(nativeElement);
         element.setLocator(locator);
+        element.init();
         return element;
     }
 
@@ -76,7 +77,7 @@ public class WebDriverBrowser implements Browser {
 
     @Override
     public void open(String url) {
-        driver.navigate().to(configuration.getBaseDomain());
+        driver.navigate().to(configuration.getBaseDomain() + url);
     }
 
     @Override
@@ -175,17 +176,22 @@ public class WebDriverBrowser implements Browser {
 
     @Override
     public void createCookie(String name, String value) {
-        throw new UnsupportedOperationException(); //To change body of implemented methods use File | Settings | File Templates.
+        Cookie cookie = new Cookie(name, value);
+        driver.manage().addCookie(cookie);
     }
 
     @Override
     public String getCookie(String name) {
-        throw new UnsupportedOperationException(); //To change body of implemented methods use File | Settings | File Templates.
+        Cookie cookie = driver.manage().getCookieNamed(name);
+        if(cookie == null) {
+            return null;
+        }
+        return cookie.getValue();
     }
 
     @Override
     public void deleteCookie(String name, String path) {
-        throw new UnsupportedOperationException(); //To change body of implemented methods use File | Settings | File Templates.
+        driver.manage().deleteCookieNamed(name);
     }
 
     @Override
