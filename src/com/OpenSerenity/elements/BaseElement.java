@@ -6,6 +6,16 @@ import com.OpenSerenity.utils.Waiter;
 
 public class BaseElement<TElement extends BaseElement> {
 
+    @Override
+    public String toString() {
+        try {
+            return String.format("%s[locator=%s]", nativeElement.getTagName(), locator);
+        } catch (Exception e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
+        return null;
+    }
+
     public void init() throws Exception {}
 
     NativeElement nativeElement;

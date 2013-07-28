@@ -8,13 +8,17 @@ public class Be {
     public static Assertion visible = new Assertion() {
         @Override
         public boolean invoke(BaseElement element) throws Exception {
-            return element.isVisible();
+            boolean result = element.isVisible();
+            System.out.println(String.format("%s is visible %s", element.toString(), result));
+            return result;
         }
     };
     public static Assertion invisible = new Assertion() {
         @Override
         public boolean invoke(BaseElement element) throws Exception {
-            return element.isInVisible();
+            boolean result = element.isInVisible();
+            System.out.println(String.format("%s is visible %s", element.toString(), result));
+            return result;
         }
     };
 }

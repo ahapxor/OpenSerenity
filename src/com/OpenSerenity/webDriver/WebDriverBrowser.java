@@ -1,8 +1,8 @@
 package com.OpenSerenity.webDriver;
 
-import com.OpenSerenity.configuration.Configuration;
-import com.OpenSerenity.configuration.ConstConfiguration;
 import com.OpenSerenity.core.Browser;
+import com.OpenSerenity.core.DriverFactory;
+import com.OpenSerenity.core.TestContext;
 import com.OpenSerenity.elements.BaseElement;
 import com.OpenSerenity.elements.NativeElement;
 import com.OpenSerenity.elements.WdNativeElement;
@@ -12,7 +12,6 @@ import com.OpenSerenity.utils.Waiter;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.*;
-import org.openqa.selenium.firefox.FirefoxDriver;
 
 import java.io.File;
 import java.io.IOException;
@@ -21,10 +20,8 @@ import java.util.Set;
 
 public class WebDriverBrowser implements Browser {
     WebDriver driver;
-    Configuration configuration;
 
     public WebDriverBrowser() {
-        configuration = new ConstConfiguration();
     }
 
     @Override
@@ -65,8 +62,8 @@ public class WebDriverBrowser implements Browser {
     }
 
     @Override
-    public void start() {
-        driver = new FirefoxDriver();
+    public void start() throws Exception {
+        driver = DriverFactory.createBrowser();
         maximize();
     }
 
@@ -77,7 +74,7 @@ public class WebDriverBrowser implements Browser {
 
     @Override
     public void open(String url) {
-        driver.navigate().to(configuration.getBaseDomain() + url);
+        driver.navigate().to(TestContext.configuration.getBaseDomain() + url);
     }
 
     @Override

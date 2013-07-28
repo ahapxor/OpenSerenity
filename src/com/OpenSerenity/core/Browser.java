@@ -8,7 +8,7 @@ import java.util.Set;
 public interface Browser {
     <TElement extends BaseElement> TElement findElement(Class<TElement> clz, String locator, Func<Browser> selectFrame) throws Exception;
 
-    public void start();
+    public void start() throws Exception;
     public void stop();
     public void open(String url);
     public void close();

@@ -27,7 +27,7 @@ public abstract class TestBase<TPage extends BasePage> {
         }
     }
 
-    private boolean firstTime = true;
+    private static boolean firstTime = true;
 
     @Before
     public final void setUpMethod() throws Exception {

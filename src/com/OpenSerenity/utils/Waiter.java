@@ -1,5 +1,6 @@
 package com.OpenSerenity.utils;
 
+import com.OpenSerenity.core.TestContext;
 import com.OpenSerenity.functionalInterfaces.WaitCondition;
 
 import java.util.Date;
@@ -12,8 +13,8 @@ public class Waiter {
     private Waiter() {
     }
 
-    long timeout = 0L;
-    long retryTimeout = 1000L;
+    long timeout = TestContext.configuration.getTimeout();
+    long retryTimeout = TestContext.configuration.getRetryTimeout();
 
     public void waitFor(WaitCondition waitCondition) throws Exception {
         try {
