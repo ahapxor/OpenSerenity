@@ -1,8 +1,13 @@
 package com.OpenSerenity.elements;
 
 import com.OpenSerenity.dsl.Assertion;
+import com.OpenSerenity.dsl.predicates.Be;
+import com.OpenSerenity.exceptions.AssertionException;
 import com.OpenSerenity.functionalInterfaces.WaitCondition;
 import com.OpenSerenity.utils.Waiter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class BaseElement<TElement extends BaseElement> {
 
@@ -42,7 +47,7 @@ public class BaseElement<TElement extends BaseElement> {
         }
 
         if (!result) {
-            throw new Exception("Condition failed");
+            throw new AssertionException();
         }
         return (TElement) this;
     }
@@ -63,6 +68,24 @@ public class BaseElement<TElement extends BaseElement> {
         return element;
     }
 
+    public <T extends BaseElement> List<T> getChildren(Class<T> clz, String locator)
+            throws Exception {
+        if (locator == null) {
+            throw new IllegalArgumentException("locator must be not null");
+        }
+        List<NativeElement> nativeElements = nativeElement.findChildren(locator);
+        List<T> result = new ArrayList<>();
+        for (NativeElement natElement : nativeElements) {
+            T element = clz.newInstance();
+            element.setNativeElement(natElement);
+            element.setLocator(locator);
+            element.init();
+            result.add(element);
+        }
+
+        return result;
+    }
+
     public boolean isVisible() throws Exception {
         return nativeElement.isDisplayed();
     }
@@ -74,5 +97,10 @@ public class BaseElement<TElement extends BaseElement> {
     public TElement click() throws Exception {
         nativeElement.click();
         return (TElement) this;
+    }
+
+    public String getText() throws Exception {
+        waitFor(Be.visible);
+        return nativeElement.getText();
     }
 }

@@ -2,6 +2,7 @@ package com.OpenSerenity.webDriver;
 
 import com.OpenSerenity.core.Browser;
 import com.OpenSerenity.core.DriverFactory;
+import com.OpenSerenity.core.LocalStorage;
 import com.OpenSerenity.core.TestContext;
 import com.OpenSerenity.elements.BaseElement;
 import com.OpenSerenity.elements.NativeElement;
@@ -15,11 +16,13 @@ import org.openqa.selenium.*;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Set;
 
 public class WebDriverBrowser implements Browser {
     WebDriver driver;
+    LocalStorage localStorage;
 
     public WebDriverBrowser() {
     }
@@ -64,6 +67,7 @@ public class WebDriverBrowser implements Browser {
     @Override
     public void start() throws Exception {
         driver = DriverFactory.createBrowser();
+        localStorage = new WebDriverLocalStorage(driver);
         maximize();
     }
 
@@ -173,7 +177,11 @@ public class WebDriverBrowser implements Browser {
 
     @Override
     public void createCookie(String name, String value) {
-        Cookie cookie = new Cookie(name, value);
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(new Date());
+        cal.add(Calendar.MONTH, 1); // add 1 month
+
+        Cookie cookie = new Cookie(name, value, null, cal.getTime());
         driver.manage().addCookie(cookie);
     }
 
@@ -194,5 +202,10 @@ public class WebDriverBrowser implements Browser {
     @Override
     public void acceptAnyAlert() {
         //throw new UnsupportedOperationException(); //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
+    public LocalStorage getLocalStorage() {
+        return localStorage;
     }
 }

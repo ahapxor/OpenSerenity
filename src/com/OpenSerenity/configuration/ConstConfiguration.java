@@ -13,6 +13,11 @@ public class ConstConfiguration implements Configuration {
     }
 
     @Override
+    public long getElementFindTimeout() {
+        throw new UnsupportedOperationException(); //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
     public long getRetryTimeout() {
         return 250L;
     }

@@ -1,5 +1,10 @@
 package com.OpenSerenity.elements;
 
+import org.openqa.selenium.WebElement;
+
+import java.util.Collection;
+import java.util.List;
+
 public interface NativeElement {
     String getTagName() throws Exception;
     String getText() throws Exception;
@@ -15,5 +20,5 @@ public interface NativeElement {
     String getAttribute(String attributeName) throws Exception;
     String getCssValue(String propertyName) throws Exception;
     NativeElement findChild(String locator);
-    Iterable<NativeElement> findChildren(String locator);
+    List<NativeElement> findChildren(String locator);
 }

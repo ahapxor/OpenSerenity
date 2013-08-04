@@ -26,6 +26,11 @@ public class XmlConfiguration implements Configuration {
     }
 
     @Override
+    public long getElementFindTimeout() {
+        return xmlConfigFile.getLong("elementFindTimeout");
+    }
+
+    @Override
     public long getRetryTimeout() {
         return xmlConfigFile.getLong("retryTimeout");
     }

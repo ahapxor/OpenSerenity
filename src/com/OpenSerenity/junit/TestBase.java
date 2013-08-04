@@ -27,18 +27,13 @@ public abstract class TestBase<TPage extends BasePage> {
         }
     }
 
-    private static boolean firstTime = true;
-
     @Before
     public final void setUpMethod() throws Exception {
-        if(firstTime) {
-            setUpClass();
-            firstTime = false;
-        }
         setUp();
     }
 
-    protected void setUpClass() throws Exception {
+    @BeforeClass
+    public static void setUpClass() throws Exception {
         TestContext.browser = new WebDriverBrowser();
         TestContext.browser.start();
     }

@@ -17,7 +17,7 @@ public class Be {
         @Override
         public boolean invoke(BaseElement element) throws Exception {
             boolean result = element.isInVisible();
-            System.out.println(String.format("%s is visible %s", element.toString(), result));
+            System.out.println(String.format("%s is invisible %s", element.toString(), result));
             return result;
         }
     };

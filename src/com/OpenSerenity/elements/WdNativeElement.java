@@ -1,11 +1,15 @@
 package com.OpenSerenity.elements;
 
+import com.OpenSerenity.core.TestContext;
 import com.OpenSerenity.functionalInterfaces.Func;
 import com.OpenSerenity.functionalInterfaces.WaitCondition;
 import com.OpenSerenity.utils.Waiter;
 import org.openqa.selenium.By;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebElement;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class WdNativeElement implements NativeElement {
     private Func<WebElement> wdElementSelector;
@@ -24,7 +28,12 @@ public class WdNativeElement implements NativeElement {
 
     @Override
     public String getTagName() throws Exception {
-        return getWdElement().getTagName();
+        try {
+            return wdElement.getTagName();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return "";
+        }
     }
 
     @Override
@@ -87,12 +96,22 @@ public class WdNativeElement implements NativeElement {
 
     @Override
     public String getAttribute(String attributeName) throws Exception {
-        return getWdElement().getAttribute(attributeName);
+        try {
+            return wdElement.getAttribute(attributeName);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return "";
+        }
     }
 
     @Override
     public String getCssValue(String propertyName) throws Exception {
-        return getWdElement().getCssValue(propertyName);
+        try {
+            return wdElement.getCssValue(propertyName);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return "";
+        }
     }
 
     @Override
@@ -100,7 +119,7 @@ public class WdNativeElement implements NativeElement {
         return new WdNativeElement(new Func<WebElement>() {
             @Override
             public WebElement invoke() throws Exception {
-                Waiter.Default().waitFor(new WaitCondition() {
+                Waiter.WithTimeout(TestContext.configuration.getElementFindTimeout()).waitFor(new WaitCondition() {
                     @Override
                     public boolean invoke() throws Exception {
                         return getWdElement().findElement(By.cssSelector(locator)) != null;
@@ -112,8 +131,24 @@ public class WdNativeElement implements NativeElement {
     }
 
     @Override
-    public Iterable<NativeElement> findChildren(String locator) {
-        throw new UnsupportedOperationException(); //To change body of implemented methods use File | Settings | File Templates.
+    public List<NativeElement> findChildren(final String locator) {
+        List<NativeElement> result = new ArrayList<>();
+        try {
+            List<WebElement> wdElementsList = getWdElement().findElements(By.cssSelector(locator));
+
+            for(final WebElement webElement : wdElementsList) {
+                result.add(new WdNativeElement(new Func<WebElement>() {
+                    @Override
+                    public WebElement invoke() throws Exception {
+                        return webElement;
+                    }
+                }));
+            }
+
+            return result;
+        } catch (Exception e) {
+            return new ArrayList<>();
+        }
     }
 
     public boolean isStale() {

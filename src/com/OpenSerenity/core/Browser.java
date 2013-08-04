@@ -34,4 +34,5 @@ public interface Browser {
     public String getCookie(String name);
     public void deleteCookie(String name, String path);
     public void acceptAnyAlert();
+    public LocalStorage getLocalStorage();
 }
